@@ -3,55 +3,64 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Bibliotech — Trocas de Livros (versão funcional)</title>
+<title>Bibliotech — Trocas de Livros (versão final)</title>
 <style>
 :root{
-  --bg:#fff8f2; --accent:#c87b3a; --accent-2:#f1dac0; --text:#4a3426;
-  --card:#fff; --muted:#7a6a5a; --btn:#b3602e;
+  --bg:#fff8f2; --accent:#c76b2f; --accent-2:#f2dac1; --text:#4a3426;
+  --card:#ffffff; --muted:#7a6a5a; --btn:#b2602b;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,var(--bg),#fff);color:var(--text);-webkit-font-smoothing:antialiased}
 header{background:linear-gradient(90deg,var(--accent-2),#ffd6a8);padding:14px;text-align:center;font-weight:800}
-.wrap{max-width:1000px;margin:14px auto;padding:12px}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
-nav button{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700}
-nav button.active{background:var(--accent);color:#fff}
+.wrap{max-width:1050px;margin:14px auto;padding:12px}
+nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+nav button{background:transparent;border:1px solid transparent;padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+nav button.active{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.06)}
 .top-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
-.search{flex:1;padding:10px;border-radius:10px;border:1px solid #ead6bf}
+.search{flex:1;padding:12px;border-radius:12px;border:1px solid #ead6bf}
 .select, .btn, .btn-ghost{padding:9px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
 .btn{background:var(--btn);color:#fff}
 .btn-ghost{background:transparent;border:1px solid #ead6bf;color:var(--text)}
-.card{background:var(--card);border-radius:12px;padding:12px;box-shadow:0 8px 20px rgba(0,0,0,.06);display:flex;gap:12px;align-items:flex-start}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.book-img{width:100px;height:150px;border-radius:8px;background-size:cover;background-position:center;flex-shrink:0}
-.h2{margin:0 0 8px 0;font-size:18px}
+.card{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 8px 24px rgba(0,0,0,.06);display:flex;gap:12px;align-items:flex-start}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.book-img{width:110px;height:160px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.h2{font-size:20px;margin:0 0 10px 0}
 .small{color:var(--muted);font-size:14px}
 .meta{font-size:13px;color:var(--muted)}
-.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.36);z-index:50}
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.36);z-index:80}
 .modal.open{display:flex}
-.modal .box{background:#fff;padding:14px;border-radius:12px;max-width:760px;width:92%}
-#chat-box{height:320px;overflow:auto;padding:12px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.04)}
-.msg{padding:10px;margin:8px 0;border-radius:10px;background:#fff4ea;max-width:80%}
+.modal .box{background:#fff;padding:16px;border-radius:12px;max-width:900px;width:94%}
+#chat-box{height:320px;overflow:auto;padding:12px;background:#fff;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.04)}
+.msg{padding:10px;margin:8px 0;border-radius:10px;background:#fff4ea;max-width:78%}
 .msg.me{background:#d7f6ea;margin-left:auto}
 .resp-head{display:flex;gap:10px;align-items:center}
-.resp-head img{width:44px;height:44px;border-radius:50%;object-fit:cover}
-.footer{padding:10px;text-align:center;color:#8a7a6a;font-size:13px;margin-top:14px}
-@media (max-width:420px){ .book-img{width:80px;height:120px} .top-row{flex-direction:column;align-items:stretch} }
+.resp-head img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+.footer{padding:12px;text-align:center;color:#8a7a6a;font-size:13px;margin-top:12px}
+.badge{display:inline-block;padding:6px 8px;border-radius:8px;background:#fff6ee;border:1px solid #f0d9c5;margin-right:6px;font-weight:700;color:var(--accent)}
+/* mobile tweak */
+@media (max-width:420px){
+  .book-img{width:84px;height:120px}
+  .top-row{flex-direction:column;align-items:stretch}
+  nav{gap:6px}
+}
 </style>
 </head>
 <body>
-<header>📚 Bibliotech — Versão funcional</header>
+<header>📚 Bibliotech — Trocas de Livros</header>
 <div class="wrap">
+
+  <!-- NAV: botões chamam showPage diretamente -->
   <nav id="menu">
-    <button class="active" data-page="home">Início</button>
-    <button data-page="estante">Estante</button>
-    <button data-page="buscar">Buscar</button>
-    <button data-page="troca">Solicitar Troca</button>
-    <button data-page="chat">Chat</button>
+    <button class="active" data-page="home" onclick="showPage('home')">Início</button>
+    <button data-page="estante" onclick="showPage('estante')">Estante</button>
+    <button data-page="buscar" onclick="showPage('buscar')">Buscar</button>
+    <button data-page="troca" onclick="showPage('troca')">Solicitar Troca</button>
+    <button data-page="chat" onclick="showPage('chat')">Chat</button>
   </nav>
 
+  <!-- barra superior -->
   <div class="top-row">
-    <input id="globalSearch" class="search" placeholder="Buscar por título, autor ou gênero..." oninput="quickSearch()" />
+    <input id="globalSearch" class="search" placeholder="Procurar por título, autor ou gênero..." oninput="quickSearch()" />
     <div style="display:flex;gap:8px;align-items:center">
       <select id="genreFilter" class="select" onchange="applyFilters()">
         <option value="">Todos os gêneros</option>
@@ -64,56 +73,60 @@ nav button.active{background:var(--accent);color:#fff}
       <button class="btn" onclick="showPage('estante')">Ver Estante</button>
     </div>
   </div>
+
   <!-- INÍCIO -->
   <section id="home" class="page active">
-    <h2 class="h2">Bem-vinda</h2>
-    <p class="small">Encontre, favorite e solicite trocas. Use filtros e teste o chat para combinar local e horário.</p>
+    <h2 class="h2">Bem-vinda à Bibliotech</h2>
+    <p class="small">Encontre livros, adicione aos favoritos, solicite trocas e combine local/horário no chat. Tudo para sua apresentação escolar.</p>
     <div class="card" style="align-items:center">
       <div style="flex:1">
-        <strong>Funcionalidades</strong>
+        <strong>Funcionalidades principais</strong>
         <ul style="margin:8px 0 0 18px">
-          <li>Estante com capas reais</li>
-          <li>Filtro por gênero e ordenação</li>
-          <li>Favoritos persistidos</li>
-          <li>Solicitar troca com data/hora</li>
-          <li>Chat com responsável (nome, local e hora)</li>
+          <li>Estante com capas reais e títulos correspondentes</li>
+          <li>Busca e filtros por gênero/autores</li>
+          <li>Favoritos salvos no seu navegador</li>
+          <li>Solicitação de troca com escolha de data e horário</li>
+          <li>Chat interativo que guarda histórico</li>
         </ul>
       </div>
-      <div style="width:120px"><img src="https://i.imgur.com/4TQwU5x.png" alt="logo" style="width:100%;border-radius:8px"></div>
+      <div style="width:120px"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Books_%28cropped%29.jpg/320px-Books_%28cropped%29.jpg" alt="logo" style="width:100%;border-radius:8px"></div>
     </div>
   </section>
 
   <!-- ESTANTE -->
-  <section id="estante" class="page">
+  <section id="estante" class="page" style="display:none">
     <h2 class="h2">Estante</h2>
     <div id="shelf" class="grid"></div>
   </section>
+
   <!-- BUSCAR -->
-  <section id="buscar" class="page">
+  <section id="buscar" class="page" style="display:none">
     <h2 class="h2">Buscar</h2>
-    <div id="searchResults" class="grid"></div>
+    <div id="searchResults" class="grid" style="margin-top:8px"></div>
   </section>
 
   <!-- TROCA -->
-  <section id="troca" class="page">
+  <section id="troca" class="page" style="display:none">
     <h2 class="h2">Solicitar Troca</h2>
-    <p class="small">Seus favoritos aparecem aqui — confirme data/horário para enviar solicitação.</p>
-    <div id="favoritosBox" class="grid"></div>
+    <p class="small">Seus favoritos aparecem abaixo. Ao solicitar escolha data/horário e confirme para o responsável te contatar pelo chat.</p>
+    <div id="favoritosBox" class="grid" style="margin-top:8px"></div>
     <div id="trocaBox" style="margin-top:12px"></div>
   </section>
 
   <!-- CHAT -->
-  <section id="chat" class="page">
+  <section id="chat" class="page" style="display:none">
     <h2 class="h2">Chat com o responsável</h2>
-    <p class="small">Preencha seu nome, local e horário preferido para agilizar a combinação.</p>
+    <p class="small">Preencha seu nome, local e horário preferido para agilizar a negociação.</p>
     <div class="card" style="flex-direction:column;gap:10px">
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <input id="meuNome" class="search" placeholder="Seu nome (ex: Camilly)" style="max-width:220px" />
-        <input id="meuLocal" class="search" placeholder="Local preferido (ex: Biblioteca X)" style="max-width:220px" />
+        <input id="meuLocal" class="search" placeholder="Local preferido (ex: Biblioteca Municipal)" style="max-width:220px" />
         <select id="meuHorario" class="search" style="max-width:160px"></select>
         <button class="btn" onclick="startChatWithInfo()">Atualizar</button>
       </div>
+
       <div id="chat-box"></div>
+
       <div style="display:flex;gap:8px;margin-top:8px">
         <input id="chatInput" class="search" placeholder="Escreva e pressione Enter" onkeypress="handleChat(event)" />
         <button class="btn" onclick="sendChat()">Enviar</button>
@@ -121,18 +134,22 @@ nav button.active{background:var(--accent);color:#fff}
     </div>
   </section>
 
-  <!-- Modal -->
+  <!-- MODAL DETALHES -->
   <div id="modal" class="modal" onclick="closeModal(event)">
     <div class="box" id="modalContent"></div>
   </div>
 
-  <div class="footer">Bibliotech — Demonstração escolar</div>
+  <div class="footer">Bibliotech — Demonstração escolar • Desenvolvido por você 💛</div>
 </div>
+
 <script>
-/* Dados: títulos e capas correspondentes */
+/* ===== DADOS: livros com capas correspondentes =====
+   Uso imagens de fontes públicas/estáveis (Amazon/Open Library/Wikimedia).
+   Caso alguma capa falhe, o script troca para um placeholder local.
+*/
 const livros = [
   {id:1,titulo:"Harry Potter e a Pedra Filosofal",autor:"J.K. Rowling",genero:"Fantasia",capa:"https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg",resumo:"Harry descobre o mundo bruxo e vai para Hogwarts."},
-  {id:2,titulo:"O Pequeno Príncipe",autor:"Antoine de Saint-Exupéry",genero:"Fábula",capa:"https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg",resumo:"Uma fábula sobre amizade e olhar sensível ao mundo."},
+  {id:2,titulo:"O Pequeno Príncipe",autor:"Antoine de Saint-Exupéry",genero:"Fábula",capa:"https://covers.openlibrary.org/b/id/8231856-L.jpg",resumo:"Uma fábula sensível sobre amizade e olhar ao mundo."},
   {id:3,titulo:"Dom Casmurro",autor:"Machado de Assis",genero:"Clássico",capa:"https://m.media-amazon.com/images/I/81OthjkJBuL.jpg",resumo:"Narrador que conta dúvidas sobre ciúme e memória."},
   {id:4,titulo:"O Hobbit",autor:"J.R.R. Tolkien",genero:"Fantasia",capa:"https://m.media-amazon.com/images/I/81WcnNQ-TBL.jpg",resumo:"Bilbo embarca em aventura rumo à Montanha Solitária."},
   {id:5,titulo:"A Culpa é das Estrelas",autor:"John Green",genero:"Romance",capa:"https://m.media-amazon.com/images/I/71g2ednj0JL.jpg",resumo:"Amor entre dois jovens em situação de doença."},
@@ -143,34 +160,23 @@ const livros = [
   {id:10,titulo:"A Seleção",autor:"Kiera Cass",genero:"Distopia",capa:"https://m.media-amazon.com/images/I/71e0yqCV41L.jpg",resumo:"Competição que decide o futuro de jovens em um reino."}
 ];
 
-/* Helpers storage */
-function getFavs(){ return JSON.parse(localStorage.getItem('bibliotech_favs')||'[]').map(Number); }
+/* ===== storage helpers (favoritos e chat) ===== */
+function getFavs(){ return (JSON.parse(localStorage.getItem('bibliotech_favs')||'[]').map(Number)) || []; }
 function saveFavs(arr){ localStorage.setItem('bibliotech_favs', JSON.stringify(arr)); }
 function getChat(){ return JSON.parse(localStorage.getItem('bibliotech_chat')||'[]'); }
 function saveChat(arr){ localStorage.setItem('bibliotech_chat', JSON.stringify(arr)); }
 
-/* Inicialização */
-document.addEventListener('DOMContentLoaded',()=>{
+/* Inicialização ao carregar a página */
+document.addEventListener('DOMContentLoaded', ()=>{
   populateFiltersAndTimes();
-  setupMenu();
   renderShelf();
   renderFavorites();
   loadChatState();
+  // mostrar somente a página ativa (garantia)
+  document.querySelectorAll('.page').forEach(p=>p.style.display = p.classList.contains('active') ? 'block' : 'none');
 });
 
-/* Menu */
-function setupMenu(){
-  document.querySelectorAll('#menu button').forEach(btn=>{
-    btn.onclick = ()=> {
-      document.querySelectorAll('#menu button').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-      document.getElementById(btn.dataset.page).classList.add('active');
-    };
-  });
-}
-
-/* Preencher filtros e horários */
+/* ---------- filtros e horários ---------- */
 function populateFiltersAndTimes(){
   const genreSel = document.getElementById('genreFilter');
   const genres = Array.from(new Set(livros.map(l=>l.genero))).sort();
@@ -179,13 +185,33 @@ function populateFiltersAndTimes(){
   ['09:00','11:00','14:00','16:00','18:00'].forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; horario.appendChild(o); });
 }
 
-/* Render estante (botões funcionais) */
+/* ---------- navegação (mostra/esconde páginas) ---------- */
+function showPage(id){
+  // remove active dos botões e aplica no botão atual
+  document.querySelectorAll('#menu button').forEach(b=>b.classList.remove('active'));
+  const btn = document.querySelector(`#menu button[data-page="${id}"]`);
+  if(btn) btn.classList.add('active');
+  // esconde todas as páginas
+  document.querySelectorAll('.page').forEach(p=>{ p.style.display='none'; p.classList.remove('active'); });
+  // mostra a solicitada
+  const el = document.getElementById(id);
+  if(el){ el.style.display='block'; el.classList.add('active'); window.scrollTo(0,0); }
+}
+
+/* ---------- render estante com capas corretas ---------- */
 function renderShelf(){
   const box = document.getElementById('shelf'); box.innerHTML='';
   livros.forEach(l=>{
     const card = document.createElement('div'); card.className='card';
-    card.innerHTML = `
-      <div class="book-img" style="background-image:url('${l.capa}')"></div>
+    // cria elemento de imagem com fallback onerror
+    const imgDiv = document.createElement('div'); imgDiv.className='book-img';
+    imgDiv.style.backgroundImage = `url('${l.capa}')`;
+    // fallback: se imagem falhar, substitui por placeholder
+    const img = new Image();
+    img.src = l.capa;
+    img.onload = ()=>{ /* ok: nothing */ };
+    img.onerror = ()=>{ imgDiv.style.backgroundImage = "url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png')"; };
+    const html = `
       <div style="flex:1">
         <strong>${l.titulo}</strong>
         <div class="meta">${l.autor} • <span class="small">${l.genero}</span></div>
@@ -198,20 +224,24 @@ function renderShelf(){
         </div>
       </div>
     `;
+    card.appendChild(imgDiv);
+    const content = document.createElement('div');
+    content.innerHTML = html;
+    card.appendChild(content);
     box.appendChild(card);
   });
 }
 
-/* Favoritos: toggle e render */
+/* ---------- favoritos (toggle e render) ---------- */
 function toggleFavorite(id){
   let favs = getFavs();
-  if(!favs.includes(id)){ favs.push(id); saveFavs(favs); alert('Favorito adicionado'); }
-  else { favs = favs.filter(x=>x!==id); saveFavs(favs); alert('Favorito removido'); }
+  if(!favs.includes(id)){ favs.push(id); saveFavs(favs); alert('Livro adicionado aos favoritos!'); }
+  else { favs = favs.filter(x=>x!==id); saveFavs(favs); alert('Livro removido dos favoritos.'); }
   renderFavorites();
 }
 function renderFavorites(){
   const favs = getFavs(); const box = document.getElementById('favoritosBox'); box.innerHTML='';
-  if(favs.length===0){ box.innerHTML='<p class="small">Nenhum favorito ainda.</p>'; return; }
+  if(!favs || favs.length===0){ box.innerHTML = '<p class="small">Nenhum favorito ainda.</p>'; return; }
   favs.forEach(fid=>{
     const l = livros.find(x=>x.id===fid);
     if(!l) return;
@@ -231,12 +261,8 @@ function renderFavorites(){
 }
 function removeFav(id){ let favs=getFavs(); favs=favs.filter(x=>x!==id); saveFavs(favs); renderFavorites(); }
 
-/* Buscar/ filtros */
-function quickSearch(){
-  const q = (document.getElementById('globalSearch').value||'').trim().toLowerCase();
-  if(!q){ document.getElementById('searchResults').innerHTML=''; return; }
-  searchBooks();
-}
+/* ---------- buscar e filtros ---------- */
+function quickSearch(){ const q=(document.getElementById('globalSearch').value||'').trim().toLowerCase(); if(!q){ document.getElementById('searchResults').innerHTML=''; return; } searchBooks(); }
 function applyFilters(){
   const genre = document.getElementById('genreFilter').value;
   const sort = document.getElementById('sortBy').value;
@@ -261,13 +287,14 @@ function searchBooks(){
   results.forEach(l=>{
     const el = document.createElement('div'); el.className='card';
     el.innerHTML = `<div class="book-img" style="background-image:url('${l.capa}')"></div>
-      <div style="flex:1"><strong>${l.titulo}</strong><div class="meta">${l.autor} • ${l.genero}</div><p class="small">${l.resumo}</p>
-      <div style="margin-top:8px"><button class="btn" onclick="openDetails(${l.id})">Abrir</button></div></div>`;
+                    <div style="flex:1"><strong>${l.titulo}</strong><div class="meta">${l.autor} • ${l.genero}</div>
+                    <p class="small">${l.resumo}</p>
+                    <div style="margin-top:8px"><button class="btn" onclick="openDetails(${l.id})">Abrir</button></div></div>`;
     resBox.appendChild(el);
   });
 }
 
-/* Modal de detalhes */
+/* ---------- modal detalhes ---------- */
 function openDetails(id){
   const l = livros.find(x=>x.id===id);
   if(!l) return;
@@ -289,12 +316,12 @@ function openDetails(id){
 function closeModal(e){ if(!e || e.target.classList.contains('modal')) document.getElementById('modal').classList.remove('open'); }
 document.getElementById('modal').onclick = closeModal;
 
-/* Troca: selecionar, confirmar (com data/hora) */
+/* ---------- selecionar/confirmar troca (com data/hora) ---------- */
 let livroSelecionado = null;
 function selectTroca(id){
   livroSelecionado = livros.find(x=>x.id===id);
   if(!livroSelecionado) return;
-  // monta seletor de datas e horários simples
+  // montar opções de data (próximos 7 dias) e horário
   const dateSel = document.createElement('select'); dateSel.id='trocaData'; dateSel.className='search';
   for(let i=0;i<7;i++){ const d=new Date(); d.setDate(d.getDate()+i); const o=document.createElement('option'); o.value=d.toISOString().slice(0,10); o.textContent=d.toLocaleDateString(); dateSel.appendChild(o); }
   const timeSel = document.createElement('select'); timeSel.id='trocaHorario'; timeSel.className='search';
@@ -313,48 +340,71 @@ function selectTroca(id){
 }
 function cancelTroca(){ document.getElementById('trocaBox').innerHTML=''; }
 
-/* Confirmar troca -> abre chat e manda proposta (usa nome/local/horário do usuário) */
+/* confirmar: envia proposta via chat (usa suas infos) */
 function confirmTroca(){
   const data = document.getElementById('trocaData') ? document.getElementById('trocaData').value : null;
   const horario = document.getElementById('trocaHorario') ? document.getElementById('trocaHorario').value : null;
   document.getElementById('trocaBox').innerHTML = '<p class="small">✔ Solicitação enviada! Aguarde contato.</p>';
-  // ir para chat
-  document.querySelector("#menu [data-page='chat']").click();
+  // vai para o chat
+  showPage('chat');
   const nome = document.getElementById('meuNome').value || 'Usuário';
   const localPref = document.getElementById('meuLocal').value || 'Local não informado';
-  setTimeout(()=>addMessage(`Responsável (Marcos): Oi ${nome}! Recebi sua solicitação para "${livroSelecionado.titulo}".`),800);
-  setTimeout(()=>addMessage(`Responsável (Marcos): Posso encontrar em: Praça Central ou ${localPref}.`),1400);
-  setTimeout(()=>addMessage(`Responsável (Marcos): Proponho o dia ${data || 'em breve'} às ${horario || 'a combinar'}. Você confirma?`),2000);
+  // responsável simulado
+  const responsibleName = 'Marcos';
+  setTimeout(()=>addMessage(`${responsibleName}: Oi ${nome}! Recebi sua solicitação para "${livroSelecionado.titulo}".`),800);
+  setTimeout(()=>addMessage(`${responsibleName}: Posso encontrar em Praça Central ou ${localPref}.`),1400);
+  setTimeout(()=>addMessage(`${responsibleName}: Proponho o dia ${data || 'em breve'} às ${horario || 'a combinar'}. Você confirma?`),2000);
   // salvar contexto e histórico
-  localStorage.setItem('bibliotech_last_responsible', JSON.stringify({name:'Marcos', place:'Praça Central', proposed:{date:data,time:horario}}));
-  pushChat({text:`Responsável (Marcos): Proposta ${data||'data'} às ${horario||'horário'}`, who:'other'});
+  localStorage.setItem('bibliotech_last_responsible', JSON.stringify({name:responsibleName, place:'Praça Central', proposed:{date:data,time:horario}}));
+  pushChat({text:`${responsibleName}: Proposta ${data||'data'} às ${horario||'horário'}`, who:'other'});
 }
 
-/* Chat: add, send, simulate e persistência */
+/* ---------- chat: enviar, simular resposta e persistir ---------- */
 function addMessage(text, who='other'){ const box=document.getElementById('chat-box'); const el=document.createElement('div'); el.className='msg' + (who==='me' ? ' me' : ''); el.textContent = text; box.appendChild(el); box.scrollTop = box.scrollHeight; pushChat({text,who}); }
 function handleChat(e){ if(e.key==='Enter') sendChat(); }
 function sendChat(){ const input = document.getElementById('chatInput'); const txt = input.value.trim(); if(!txt) return; addMessage('Você: '+txt,'me'); input.value=''; setTimeout(()=>simulateResponse(txt),700); }
 function simulateResponse(txt){
-  const low = (txt||'').toLowerCase(); const resp = JSON.parse(localStorage.getItem('bibliotech_last_responsible')||'null'); const nome = document.getElementById('meuNome').value || 'Usuário';
-  if(low.includes('sim')||low.includes('confirmo')||low.includes('ok')){ addMessage(`Responsável (Marcos): Perfeito, ${nome}! Combinado.`); return; }
-  if(low.includes('onde')||low.includes('local')){ addMessage(`Responsável (Marcos): Estou em ${resp?resp.place:'Praça Central'}.`); return; }
-  if(low.includes('quando')||low.includes('horário')||low.includes('dia')){ addMessage(`Responsável (Marcos): Posso no fim de semana ou após 18:00. Qual prefere?`); return; }
-  addMessage(`Responsável (Marcos): Entendi, ${nome}. Me diga qual livro você oferece em troca e qual horário prefere.`);
+  const low = (txt||'').toLowerCase();
+  const resp = JSON.parse(localStorage.getItem('bibliotech_last_responsible')||'null');
+  const nomeUsuario = document.getElementById('meuNome').value || 'Usuário';
+  const name = resp ? resp.name || 'Responsável' : 'Responsável';
+  if(low.includes('sim')||low.includes('confirmo')||low.includes('ok')){ addMessage(`${name}: Perfeito, ${nomeUsuario}! Está combinado.`); return; }
+  if(low.includes('onde')||low.includes('local')){ addMessage(`${name}: Estou em ${resp?resp.place:'Praça Central'}.`); return; }
+  if(low.includes('quando')||low.includes('horário')||low.includes('dia')){ addMessage(`${name}: Posso no fim de semana ou após as 18:00. Qual prefere?`); return; }
+  if(low.includes('telefone')||low.includes('contato')){ addMessage(`${name}: Prefiro combinar por aqui. Se quiser, trocamos número.`); return; }
+  addMessage(`${name}: Entendi, ${nomeUsuario}. Qual livro você oferece em troca e qual horário prefere?`);
 }
 
-/* Histórico de chat no localStorage */
+/* Histórico chat (localStorage) */
 function pushChat(msg){ const arr = getChat(); arr.push(msg); saveChat(arr); }
 function loadChatState(){ const hist = getChat(); if(hist && hist.length){ hist.forEach(m=>{ const who = m.who||'other'; addMessage(m.text, who); }); } }
 
-/* Disponibilidade / reserva (simulação) */
+/* disponibilidade / reserva (simulação simples) */
 function markAvailable(id){ alert('Marcado como disponível (simulação).'); }
-function reserve(id){ alert('Reservado (simulação).'); }
+function reserve(id){ alert('Livro reservado (simulação).'); }
 
 /* util */
-function showPage(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); const el=document.getElementById(id); if(el) el.classList.add('active'); }
+function showPageAndSetActive(id){
+  // alternate if needed
+  showPage(id);
+}
+function showPage(id){ document.querySelectorAll('#menu button').forEach(b=>b.classList.remove('active')); const btn=document.querySelector(`#menu button[data-page="${id}"]`); if(btn) btn.classList.add('active'); document.querySelectorAll('.page').forEach(p=>{ p.style.display='none'; p.classList.remove('active'); }); const el=document.getElementById(id); if(el){ el.style.display='block'; el.classList.add('active'); window.scrollTo(0,0); } }
 
-/* Inicial */
-renderShelf(); renderFavorites();
+/* utilities para inicializar displays (reenforce) */
+function startChatWithInfo(){ // salva preferências do usuário (apenas para facilidade)
+  const nome = document.getElementById('meuNome').value || '';
+  const localPref = document.getElementById('meuLocal').value || '';
+  const horario = document.getElementById('meuHorario').value || '';
+  // confirmar pra usuário
+  alert('Informações atualizadas: ' + (nome ? nome : '(sem nome)'));
+}
+
+/* cancelar troca */
+function cancelTroca(){ document.getElementById('trocaBox').innerHTML = ''; }
+
+/* inicial render calls (final) */
+renderShelf();
+renderFavorites();
 </script>
 </body>
 </html>
