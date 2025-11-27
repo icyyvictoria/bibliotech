@@ -3,48 +3,44 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Bibliotech — Troca inteligente de livros</title>
+<title>Bibliotech — Trocas de Livros (versão funcional)</title>
 <style>
-/* ===== PALETA E RESET ===== */
 :root{
-  --bg:#fff9f4; --accent:#ffb86b; --accent-2:#6c4a3b; --card:#ffffff;
-  --muted:#7a6a5a; --success:#2a9d8f; --danger:#e63946; --glass: rgba(255,255,255,0.6);
+  --bg:#fff8f2; --accent:#c87b3a; --accent-2:#f1dac0; --text:#4a3426;
+  --card:#fff; --muted:#7a6a5a; --btn:#b3602e;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,var(--bg),#fff);color:var(--accent-2);-webkit-font-smoothing:antialiased}
-header{background:linear-gradient(90deg,#ffd4a3,#ffd1b0);padding:18px;text-align:center;font-size:22px;font-weight:800;color:var(--accent-2);box-shadow:0 6px 18px rgba(108,74,59,.06)}
-.wrap{max-width:1100px;margin:16px auto;padding:12px}
-nav{display:flex;gap:10px;justify-content:center;margin:12px 0;flex-wrap:wrap}
-nav button{background:transparent;border:1px solid transparent;padding:9px 14px;border-radius:12px;font-weight:700;cursor:pointer;transition:all .18s ease}
-nav button:hover{transform:translateY(-2px)}
-nav button.active{background:var(--accent);color:white;box-shadow:0 8px 20px rgba(108,74,59,.08)}
-.top-row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.search{width:100%;padding:12px;border-radius:12px;border:1px solid #ead6bf;background:var(--glass)}
-.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(90deg,var(--accent-2),#ffd6a8);padding:14px;text-align:center;font-weight:800}
+.wrap{max-width:1000px;margin:14px auto;padding:12px}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+nav button{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700}
+nav button.active{background:var(--accent);color:#fff}
+.top-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+.search{flex:1;padding:10px;border-radius:10px;border:1px solid #ead6bf}
 .select, .btn, .btn-ghost{padding:9px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
-.btn{background:var(--accent-2);color:white}
-.btn-ghost{background:transparent;border:1px solid #ead6bf;color:var(--accent-2)}
-.card{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(100,70,50,.06);margin:12px 0;display:flex;gap:14px;align-items:flex-start}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.book-img{width:110px;height:160px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0;box-shadow:0 10px 30px rgba(0,0,0,.08)}
-.h2{font-size:20px;margin:0 0 10px 0}
+.btn{background:var(--btn);color:#fff}
+.btn-ghost{background:transparent;border:1px solid #ead6bf;color:var(--text)}
+.card{background:var(--card);border-radius:12px;padding:12px;box-shadow:0 8px 20px rgba(0,0,0,.06);display:flex;gap:12px;align-items:flex-start}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.book-img{width:100px;height:150px;border-radius:8px;background-size:cover;background-position:center;flex-shrink:0}
+.h2{margin:0 0 8px 0;font-size:18px}
 .small{color:var(--muted);font-size:14px}
 .meta{font-size:13px;color:var(--muted)}
-.badge{display:inline-block;padding:6px 8px;border-radius:8px;background:#fff6ee;border:1px solid #f0d9c5;margin-right:6px;font-weight:700;color:var(--accent-2)}
-.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(10,10,10,.36);z-index:80}
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.36);z-index:50}
 .modal.open{display:flex}
-.modal .box{background:#fff;padding:16px;border-radius:12px;max-width:860px;width:94%}
-#chat-box{height:340px;overflow:auto;padding:12px;background:linear-gradient(180deg,#fff,#fff8f1);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.04)}
-.msg{padding:10px;margin:10px 0;border-radius:12px;background:#fff4ea;max-width:78%}
-.msg.me{background:#d8f7ec;margin-left:auto}
-.responsible{display:flex;gap:10px;align-items:center}
-.responsible img{width:48px;height:48px;border-radius:50%;object-fit:cover}
-.footer{padding:12px;text-align:center;color:#8a7a6a;font-size:13px}
-@media (max-width:420px){ .book-img{width:84px;height:120px} .top-row{flex-direction:column;align-items:stretch} }
+.modal .box{background:#fff;padding:14px;border-radius:12px;max-width:760px;width:92%}
+#chat-box{height:320px;overflow:auto;padding:12px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+.msg{padding:10px;margin:8px 0;border-radius:10px;background:#fff4ea;max-width:80%}
+.msg.me{background:#d7f6ea;margin-left:auto}
+.resp-head{display:flex;gap:10px;align-items:center}
+.resp-head img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.footer{padding:10px;text-align:center;color:#8a7a6a;font-size:13px;margin-top:14px}
+@media (max-width:420px){ .book-img{width:80px;height:120px} .top-row{flex-direction:column;align-items:stretch} }
 </style>
 </head>
 <body>
-<header>📚 Bibliotech — Trocas Inteligentes</header>
+<header>📚 Bibliotech — Versão funcional</header>
 <div class="wrap">
   <nav id="menu">
     <button class="active" data-page="home">Início</button>
@@ -54,10 +50,9 @@ nav button.active{background:var(--accent);color:white;box-shadow:0 8px 20px rgb
     <button data-page="chat">Chat</button>
   </nav>
 
-  <!-- barra superior com busca / filtros -->
   <div class="top-row">
-    <input id="globalSearch" class="search" placeholder="Procurar por título, autor ou gênero..." oninput="quickSearch()" />
-    <div class="controls">
+    <input id="globalSearch" class="search" placeholder="Buscar por título, autor ou gênero..." oninput="quickSearch()" />
+    <div style="display:flex;gap:8px;align-items:center">
       <select id="genreFilter" class="select" onchange="applyFilters()">
         <option value="">Todos os gêneros</option>
       </select>
@@ -66,44 +61,43 @@ nav button.active{background:var(--accent);color:white;box-shadow:0 8px 20px rgb
         <option value="title">Título A → Z</option>
         <option value="author">Autor A → Z</option>
       </select>
-      <button class="btn-ghost" onclick="resetFilters()">Limpar</button>
       <button class="btn" onclick="showPage('estante')">Ver Estante</button>
     </div>
   </div>
   <!-- INÍCIO -->
   <section id="home" class="page active">
-    <h2 class="h2">Bem-vinda à Bibliotech</h2>
-    <p class="small">Plataforma feita para demonstração escolar: trocas, reservas e chat direto com responsáveis. Experimente filtros, favoritar e combinar local/horário.</p>
+    <h2 class="h2">Bem-vinda</h2>
+    <p class="small">Encontre, favorite e solicite trocas. Use filtros e teste o chat para combinar local e horário.</p>
     <div class="card" style="align-items:center">
       <div style="flex:1">
-        <strong>Use cases</strong>
+        <strong>Funcionalidades</strong>
         <ul style="margin:8px 0 0 18px">
-          <li>Encontrar livros por gênero</li>
-          <li>Combinar troca com datas e locais</li>
-          <li>Salvar favoritos e monitorar disponibilidade</li>
+          <li>Estante com capas reais</li>
+          <li>Filtro por gênero e ordenação</li>
+          <li>Favoritos persistidos</li>
+          <li>Solicitar troca com data/hora</li>
+          <li>Chat com responsável (nome, local e hora)</li>
         </ul>
       </div>
-      <div style="width:140px">
-        <img src="https://i.imgur.com/4TQwU5x.png" alt="logo" style="width:100%;border-radius:10px">
-      </div>
+      <div style="width:120px"><img src="https://i.imgur.com/4TQwU5x.png" alt="logo" style="width:100%;border-radius:8px"></div>
     </div>
   </section>
 
   <!-- ESTANTE -->
   <section id="estante" class="page">
-    <h2 class="h2">Estante — Livros</h2>
+    <h2 class="h2">Estante</h2>
     <div id="shelf" class="grid"></div>
   </section>
-  <!-- BUSCA -->
+  <!-- BUSCAR -->
   <section id="buscar" class="page">
     <h2 class="h2">Buscar</h2>
     <div id="searchResults" class="grid"></div>
   </section>
 
-  <!-- TROCA (favoritos) -->
+  <!-- TROCA -->
   <section id="troca" class="page">
     <h2 class="h2">Solicitar Troca</h2>
-    <p class="small">Seus favoritos aparecem aqui. Escolha uma data e horário ao confirmar.</p>
+    <p class="small">Seus favoritos aparecem aqui — confirme data/horário para enviar solicitação.</p>
     <div id="favoritosBox" class="grid"></div>
     <div id="trocaBox" style="margin-top:12px"></div>
   </section>
@@ -111,20 +105,15 @@ nav button.active{background:var(--accent);color:white;box-shadow:0 8px 20px rgb
   <!-- CHAT -->
   <section id="chat" class="page">
     <h2 class="h2">Chat com o responsável</h2>
-    <p class="small">Preencha seu nome, local e horário para facilitar a negociação.</p>
-
+    <p class="small">Preencha seu nome, local e horário preferido para agilizar a combinação.</p>
     <div class="card" style="flex-direction:column;gap:10px">
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <input id="meuNome" class="search" placeholder="Seu nome" style="max-width:220px" />
-        <input id="meuLocal" class="search" placeholder="Local preferido (ex: Biblioteca Municipal)" style="max-width:220px" />
-        <select id="meuHorario" class="search" style="max-width:160px">
-          <option value="">Escolha horário preferido</option>
-        </select>
+        <input id="meuNome" class="search" placeholder="Seu nome (ex: Camilly)" style="max-width:220px" />
+        <input id="meuLocal" class="search" placeholder="Local preferido (ex: Biblioteca X)" style="max-width:220px" />
+        <select id="meuHorario" class="search" style="max-width:160px"></select>
         <button class="btn" onclick="startChatWithInfo()">Atualizar</button>
       </div>
-
       <div id="chat-box"></div>
-
       <div style="display:flex;gap:8px;margin-top:8px">
         <input id="chatInput" class="search" placeholder="Escreva e pressione Enter" onkeypress="handleChat(event)" />
         <button class="btn" onclick="sendChat()">Enviar</button>
@@ -132,65 +121,65 @@ nav button.active{background:var(--accent);color:white;box-shadow:0 8px 20px rgb
     </div>
   </section>
 
-  <!-- MODAL DETALHES -->
+  <!-- Modal -->
   <div id="modal" class="modal" onclick="closeModal(event)">
     <div class="box" id="modalContent"></div>
   </div>
 
-  <div class="footer">Bibliotech — Demonstração escolar • Feito por você 💛</div>
+  <div class="footer">Bibliotech — Demonstração escolar</div>
 </div>
 <script>
-/* ===== DADOS RICOS: livros com gênero, autor e mini-bio do autor ===== */
+/* Dados: títulos e capas correspondentes */
 const livros = [
-  {id:1, titulo:"Harry Potter e a Pedra Filosofal", autor:"J.K. Rowling", genero:"Fantasia", capa:"https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg", resumo:"O menino bruxo descobre Hogwarts e inicia sua jornada.", authorBio:"J.K. Rowling é autora britânica conhecida pela saga Harry Potter."},
-  {id:2, titulo:"O Pequeno Príncipe", autor:"Antoine de Saint-Exupéry", genero:"Fábula", capa:"https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg", resumo:"Reflexões poéticas sobre amizade, infância e amor.", authorBio:"Piloto e escritor francês, autor de um clássico universal."},
-  {id:3, titulo:"Dom Casmurro", autor:"Machado de Assis", genero:"Clássico", capa:"https://m.media-amazon.com/images/I/81OthjkJBuL.jpg", resumo:"Narrador que questiona memórias e ciúmes.", authorBio:"Machado de Assis é um dos maiores escritores brasileiros."},
-  {id:4, titulo:"O Hobbit", autor:"J.R.R. Tolkien", genero:"Fantasia", capa:"https://m.media-amazon.com/images/I/81WcnNQ-TBL.jpg", resumo:"A aventura inesperada de Bilbo em busca de um tesouro.", authorBio:"Tolkien, professor e criador de um universo épico."},
-  {id:5, titulo:"A Culpa é das Estrelas", autor:"John Green", genero:"Romance", capa:"https://m.media-amazon.com/images/I/71g2ednj0JL.jpg", resumo:"Amor entre dois jovens em situações difíceis.", authorBio:"John Green escreve sobre adolescentes com emoção e humor."},
-  {id:6, titulo:"1984", autor:"George Orwell", genero:"Distopia", capa:"https://m.media-amazon.com/images/I/71kxa1-0mfL.jpg", resumo:"Uma sociedade sob vigilância constante.", authorBio:"Orwell abordou política, controle e sociedade."},
-  {id:7, titulo:"Cem Anos de Solidão", autor:"Gabriel García Márquez", genero:"Realismo Mágico", capa:"https://m.media-amazon.com/images/I/71Y9G4DqC6L.jpg", resumo:"Saga de uma família em Macondo.", authorBio:"Gabo foi um dos maiores nomes da literatura latino-americana."},
-  {id:8, titulo:"Orgulho e Preconceito", autor:"Jane Austen", genero:"Romance", capa:"https://m.media-amazon.com/images/I/81WojUxbbFL.jpg", resumo:"Um romance sobre amor e diferenças sociais.", authorBio:"Jane Austen retratou com humor e crítica a sociedade inglesa."},
-  {id:9, titulo:"O Senhor dos Anéis", autor:"J.R.R. Tolkien", genero:"Fantasia", capa:"https://m.media-amazon.com/images/I/91dSMhdIzTL.jpg", resumo:"A épica jornada pela Terra-média.", authorBio:"Tolkien, mestre da fantasia épica."},
-  {id:10,titulo:"A Seleção", autor:"Kiera Cass", genero:"Distopia", capa:"https://m.media-amazon.com/images/I/71e0yqCV41L.jpg", resumo:"Competição que define o futuro de jovens em um reino.", authorBio:"Kiera Cass escreveu romances YA populares."}
+  {id:1,titulo:"Harry Potter e a Pedra Filosofal",autor:"J.K. Rowling",genero:"Fantasia",capa:"https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg",resumo:"Harry descobre o mundo bruxo e vai para Hogwarts."},
+  {id:2,titulo:"O Pequeno Príncipe",autor:"Antoine de Saint-Exupéry",genero:"Fábula",capa:"https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg",resumo:"Uma fábula sobre amizade e olhar sensível ao mundo."},
+  {id:3,titulo:"Dom Casmurro",autor:"Machado de Assis",genero:"Clássico",capa:"https://m.media-amazon.com/images/I/81OthjkJBuL.jpg",resumo:"Narrador que conta dúvidas sobre ciúme e memória."},
+  {id:4,titulo:"O Hobbit",autor:"J.R.R. Tolkien",genero:"Fantasia",capa:"https://m.media-amazon.com/images/I/81WcnNQ-TBL.jpg",resumo:"Bilbo embarca em aventura rumo à Montanha Solitária."},
+  {id:5,titulo:"A Culpa é das Estrelas",autor:"John Green",genero:"Romance",capa:"https://m.media-amazon.com/images/I/71g2ednj0JL.jpg",resumo:"Amor entre dois jovens em situação de doença."},
+  {id:6,titulo:"1984",autor:"George Orwell",genero:"Distopia",capa:"https://m.media-amazon.com/images/I/71kxa1-0mfL.jpg",resumo:"Distopia sobre vigilância e controle."},
+  {id:7,titulo:"Cem Anos de Solidão",autor:"Gabriel García Márquez",genero:"Realismo Mágico",capa:"https://m.media-amazon.com/images/I/71Y9G4DqC6L.jpg",resumo:"Saga familiar com realismo mágico."},
+  {id:8,titulo:"Orgulho e Preconceito",autor:"Jane Austen",genero:"Romance",capa:"https://m.media-amazon.com/images/I/81WojUxbbFL.jpg",resumo:"Romance sobre amor, status e mal-entendidos."},
+  {id:9,titulo:"O Senhor dos Anéis",autor:"J.R.R. Tolkien",genero:"Fantasia",capa:"https://m.media-amazon.com/images/I/91dSMhdIzTL.jpg",resumo:"A grande jornada para destruir o Anel."},
+  {id:10,titulo:"A Seleção",autor:"Kiera Cass",genero:"Distopia",capa:"https://m.media-amazon.com/images/I/71e0yqCV41L.jpg",resumo:"Competição que decide o futuro de jovens em um reino."}
 ];
 
-/* ===== helpers de storage e inicialização ===== */
-function getGenres(){ return Array.from(new Set(livros.map(l=>l.genero))).sort() }
-function getFavs(){ return JSON.parse(localStorage.getItem('bibliotech_favs')||'[]') }
-function saveFavs(a){ localStorage.setItem('bibliotech_favs', JSON.stringify(a)) }
-function getChat(){ return JSON.parse(localStorage.getItem('bibliotech_chat')||'[]') }
-function saveChat(c){ localStorage.setItem('bibliotech_chat', JSON.stringify(c)) }
+/* Helpers storage */
+function getFavs(){ return JSON.parse(localStorage.getItem('bibliotech_favs')||'[]').map(Number); }
+function saveFavs(arr){ localStorage.setItem('bibliotech_favs', JSON.stringify(arr)); }
+function getChat(){ return JSON.parse(localStorage.getItem('bibliotech_chat')||'[]'); }
+function saveChat(arr){ localStorage.setItem('bibliotech_chat', JSON.stringify(arr)); }
 
-/* preencher filtro de gêneros e horários (próximos 7 dias) */
+/* Inicialização */
 document.addEventListener('DOMContentLoaded',()=>{
-  const genre = document.getElementById('genreFilter');
-  getGenres().forEach(g=>{ const o=document.createElement('option'); o.value=g; o.textContent=g; genre.appendChild(o) });
-  const horario = document.getElementById('meuHorario');
-  const times = ['09:00','11:00','14:00','16:00','18:00'];
-  times.forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; horario.appendChild(o) });
-  populateDateSlots();
-  setupMenu(); renderShelf(); renderFavorites(); loadChatState();
+  populateFiltersAndTimes();
+  setupMenu();
+  renderShelf();
+  renderFavorites();
+  loadChatState();
 });
 
-/* gera próximos 7 dias em um seletor (usado no modal de confirmação) */
-function populateDateSlots(){
-  const select = document.createElement('select'); select.id='trocaData'; select.className='search';
-  for(let i=0;i<7;i++){
-    const d = new Date(); d.setDate(d.getDate()+i);
-    const opt = document.createElement('option'); opt.value = d.toISOString().slice(0,10);
-    opt.textContent = d.toLocaleDateString();
-    select.appendChild(opt);
-  }
-  // ficará inserido dinamicamente quando necessário
-  window.trocaDateSelect = select;
+/* Menu */
+function setupMenu(){
+  document.querySelectorAll('#menu button').forEach(btn=>{
+    btn.onclick = ()=> {
+      document.querySelectorAll('#menu button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      document.getElementById(btn.dataset.page).classList.add('active');
+    };
+  });
 }
 
-/* ===== Menu simples ===== */
-function setupMenu(){ document.querySelectorAll('#menu button').forEach(btn=>{
-  btn.onclick = ()=>{ document.querySelectorAll('#menu button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(btn.dataset.page).classList.add('active'); };
-}); }
+/* Preencher filtros e horários */
+function populateFiltersAndTimes(){
+  const genreSel = document.getElementById('genreFilter');
+  const genres = Array.from(new Set(livros.map(l=>l.genero))).sort();
+  genres.forEach(g=>{ const o=document.createElement('option'); o.value=g; o.textContent=g; genreSel.appendChild(o); });
+  const horario = document.getElementById('meuHorario');
+  ['09:00','11:00','14:00','16:00','18:00'].forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; horario.appendChild(o); });
+}
 
-/* ===== Render Estante com botões e badges ===== */
+/* Render estante (botões funcionais) */
 function renderShelf(){
   const box = document.getElementById('shelf'); box.innerHTML='';
   livros.forEach(l=>{
@@ -203,7 +192,7 @@ function renderShelf(){
         <p class="small">${l.resumo}</p>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn" onclick="openDetails(${l.id})">Ver</button>
-          <button class="btn-ghost" onclick="addFavorite(${l.id})">★ Favoritar</button>
+          <button class="btn-ghost" onclick="toggleFavorite(${l.id})">★ Favoritar</button>
           <button class="btn-ghost" onclick="markAvailable(${l.id})">Disponível</button>
           <button class="btn-ghost" onclick="reserve(${l.id})">Reservar</button>
         </div>
@@ -213,8 +202,41 @@ function renderShelf(){
   });
 }
 
-/* ===== Busca e filtros ===== */
-function quickSearch(){ document.getElementById('searchResults').innerHTML=''; const q=document.getElementById('globalSearch').value.trim().toLowerCase(); if(q===''){ document.getElementById('searchResults').innerHTML=''; return; } searchBooks(); }
+/* Favoritos: toggle e render */
+function toggleFavorite(id){
+  let favs = getFavs();
+  if(!favs.includes(id)){ favs.push(id); saveFavs(favs); alert('Favorito adicionado'); }
+  else { favs = favs.filter(x=>x!==id); saveFavs(favs); alert('Favorito removido'); }
+  renderFavorites();
+}
+function renderFavorites(){
+  const favs = getFavs(); const box = document.getElementById('favoritosBox'); box.innerHTML='';
+  if(favs.length===0){ box.innerHTML='<p class="small">Nenhum favorito ainda.</p>'; return; }
+  favs.forEach(fid=>{
+    const l = livros.find(x=>x.id===fid);
+    if(!l) return;
+    const el = document.createElement('div'); el.className='card';
+    el.innerHTML = `<div class="book-img" style="background-image:url('${l.capa}')"></div>
+      <div style="flex:1">
+        <strong>${l.titulo}</strong>
+        <div class="meta">${l.autor}</div>
+        <p class="small">${l.resumo}</p>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button class="btn" onclick="selectTroca(${l.id})">Solicitar Troca</button>
+          <button class="btn-ghost" onclick="removeFav(${l.id})">Remover</button>
+        </div>
+      </div>`;
+    box.appendChild(el);
+  });
+}
+function removeFav(id){ let favs=getFavs(); favs=favs.filter(x=>x!==id); saveFavs(favs); renderFavorites(); }
+
+/* Buscar/ filtros */
+function quickSearch(){
+  const q = (document.getElementById('globalSearch').value||'').trim().toLowerCase();
+  if(!q){ document.getElementById('searchResults').innerHTML=''; return; }
+  searchBooks();
+}
 function applyFilters(){
   const genre = document.getElementById('genreFilter').value;
   const sort = document.getElementById('sortBy').value;
@@ -222,46 +244,41 @@ function applyFilters(){
   if(genre) list = list.filter(l=>l.genero===genre);
   if(sort==='title') list.sort((a,b)=>a.titulo.localeCompare(b.titulo));
   if(sort==='author') list.sort((a,b)=>a.autor.localeCompare(b.autor));
-  // render simples (usa shelf container)
   const box = document.getElementById('shelf'); box.innerHTML='';
   list.forEach(l=>{
     const el = document.createElement('div'); el.className='card';
     el.innerHTML = `<div class="book-img" style="background-image:url('${l.capa}')"></div>
                     <div style="flex:1"><strong>${l.titulo}</strong><div class="meta">${l.autor}</div><p class="small">${l.resumo}</p>
-                    <div style="margin-top:10px"><button class="btn" onclick="openDetails(${l.id})">Ver</button></div></div>`;
+                    <div style="margin-top:8px"><button class="btn" onclick="openDetails(${l.id})">Ver</button></div></div>`;
     box.appendChild(el);
   });
 }
-function resetFilters(){ document.getElementById('genreFilter').value=''; document.getElementById('sortBy').value='relevance'; renderShelf(); }
-
-/* busca detalhada para aba de Buscar */
 function searchBooks(){
-  const q = (document.getElementById('globalSearch').value || document.getElementById('searchResults') && document.getElementById('globalSearch').value).trim().toLowerCase();
+  const q = (document.getElementById('globalSearch').value||'').trim().toLowerCase();
   const resBox = document.getElementById('searchResults'); resBox.innerHTML='';
   const results = livros.filter(l=> l.titulo.toLowerCase().includes(q) || l.autor.toLowerCase().includes(q) || l.genero.toLowerCase().includes(q));
   if(results.length===0){ resBox.innerHTML='<p class="small">Nenhum resultado.</p>'; return; }
   results.forEach(l=>{
     const el = document.createElement('div'); el.className='card';
     el.innerHTML = `<div class="book-img" style="background-image:url('${l.capa}')"></div>
-                    <div style="flex:1"><strong>${l.titulo}</strong><div class="meta">${l.autor} • ${l.genero}</div>
-                    <p class="small">${l.resumo}</p>
-                    <div style="margin-top:8px"><button class="btn" onclick="openDetails(${l.id})">Abrir</button></div></div>`;
+      <div style="flex:1"><strong>${l.titulo}</strong><div class="meta">${l.autor} • ${l.genero}</div><p class="small">${l.resumo}</p>
+      <div style="margin-top:8px"><button class="btn" onclick="openDetails(${l.id})">Abrir</button></div></div>`;
     resBox.appendChild(el);
   });
 }
 
-/* ===== Modal detalhes (inclui mini-bio do autor) ===== */
+/* Modal de detalhes */
 function openDetails(id){
   const l = livros.find(x=>x.id===id);
+  if(!l) return;
   document.getElementById('modalContent').innerHTML = `
     <h3>${l.titulo}</h3><div class="meta">${l.autor} • ${l.genero}</div>
     <div style="display:flex;gap:12px;margin-top:10px">
       <div class="book-img" style="width:160px;height:220px;background-image:url('${l.capa}')"></div>
       <div style="flex:1">
         <p class="small">${l.resumo}</p>
-        <p class="small"><strong>Sobre o autor:</strong> ${l.authorBio}</p>
         <div style="margin-top:10px;display:flex;gap:8px">
-          <button class="btn" onclick="addFavorite(${l.id}); closeModal()">Favoritar</button>
+          <button class="btn" onclick="toggleFavorite(${l.id}); closeModal()">Favoritar</button>
           <button class="btn-ghost" onclick="selectTroca(${l.id}); closeModal()">Solicitar Troca</button>
         </div>
       </div>
@@ -270,102 +287,74 @@ function openDetails(id){
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(e){ if(!e || e.target.classList.contains('modal')) document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').onclick = closeModal;
 
-/* ===== Favoritos (localStorage) ===== */
-function addFavorite(id){
-  const favs = getFavs(); if(!favs.includes(id)){ favs.push(id); saveFavs(favs); renderFavorites(); alert('Livro adicionado aos favoritos!'); } else { alert('Já está nos favoritos'); }
-}
-function removeFav(id){ let favs = getFavs(); favs = favs.filter(x=>x!==id); saveFavs(favs); renderFavorites(); }
-function renderFavorites(){
-  const favs = getFavs(); const box = document.getElementById('favoritosBox'); box.innerHTML='';
-  if(favs.length===0){ box.innerHTML = '<p class="small">Nenhum favorito ainda.</p>'; return; }
-  favs.forEach(fid=>{
-    const l = livros.find(x=>x.id===fid);
-    const el = document.createElement('div'); el.className='card';
-    el.innerHTML = `<div class="book-img" style="background-image:url('${l.capa}')"></div>
-                    <div style="flex:1"><strong>${l.titulo}</strong><div class="meta">${l.autor}</div><p class="small">${l.resumo}</p>
-                    <div style="margin-top:8px;display:flex;gap:8px"><button class="btn" onclick="selectTroca(${l.id})">Solicitar Troca</button>
-                    <button class="btn-ghost" onclick="removeFav(${l.id})">Remover</button></div></div>`;
-    box.appendChild(el);
-  });
-}
-
-/* ===== Selecionar troca e confirmação com escolha de data/horário ===== */
+/* Troca: selecionar, confirmar (com data/hora) */
 let livroSelecionado = null;
 function selectTroca(id){
   livroSelecionado = livros.find(x=>x.id===id);
-  // monta form de confirmação com data (trocaDateSelect) e horários
-  const horaSel = document.createElement('select'); horaSel.id='trocaHorario'; horaSel.className='search';
-  ['09:00','11:00','14:00','16:00','18:00'].forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; horaSel.appendChild(o) });
-  document.getElementById('trocaBox').innerHTML = `<div class="card"><div style="flex:1"><strong>Solicitar troca por:</strong><p class="small"><b>${livroSelecionado.titulo}</b> — ${livroSelecionado.autor}</p>
+  if(!livroSelecionado) return;
+  // monta seletor de datas e horários simples
+  const dateSel = document.createElement('select'); dateSel.id='trocaData'; dateSel.className='search';
+  for(let i=0;i<7;i++){ const d=new Date(); d.setDate(d.getDate()+i); const o=document.createElement('option'); o.value=d.toISOString().slice(0,10); o.textContent=d.toLocaleDateString(); dateSel.appendChild(o); }
+  const timeSel = document.createElement('select'); timeSel.id='trocaHorario'; timeSel.className='search';
+  ['09:00','11:00','14:00','16:00','18:00'].forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; timeSel.appendChild(o); });
+  document.getElementById('trocaBox').innerHTML = `<div class="card"><div style="flex:1">
+    <strong>Solicitar troca por:</strong>
+    <p class="small"><b>${livroSelecionado.titulo}</b> — ${livroSelecionado.autor}</p>
     <p class="small">${livroSelecionado.resumo}</p>
     <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-      ${window.trocaDateSelect ? window.trocaDateSelect.outerHTML : ''}
-      ${horaSel.outerHTML}
+      ${dateSel.outerHTML}
+      ${timeSel.outerHTML}
       <button class="btn" onclick="confirmTroca()">Confirmar</button>
       <button class="btn-ghost" onclick="cancelTroca()">Cancelar</button>
     </div></div></div>`;
   showPage('troca');
 }
-
 function cancelTroca(){ document.getElementById('trocaBox').innerHTML=''; }
 
-/* ===== Confirmar troca: abre chat e guarda proposta (usa nome/local/horário do usuário) ===== */
+/* Confirmar troca -> abre chat e manda proposta (usa nome/local/horário do usuário) */
 function confirmTroca(){
   const data = document.getElementById('trocaData') ? document.getElementById('trocaData').value : null;
   const horario = document.getElementById('trocaHorario') ? document.getElementById('trocaHorario').value : null;
-  document.getElementById('trocaBox').innerHTML = '<p class="small">✔ Solicitação enviada! Aguarde o contato do responsável.</p>';
+  document.getElementById('trocaBox').innerHTML = '<p class="small">✔ Solicitação enviada! Aguarde contato.</p>';
   // ir para chat
   document.querySelector("#menu [data-page='chat']").click();
   const nome = document.getElementById('meuNome').value || 'Usuário';
   const localPref = document.getElementById('meuLocal').value || 'Local não informado';
-  // mensagem inicial do responsável (simulado)
   setTimeout(()=>addMessage(`Responsável (Marcos): Oi ${nome}! Recebi sua solicitação para "${livroSelecionado.titulo}".`),800);
-  setTimeout(()=>addMessage(`Responsável (Marcos): Posso encontrar em: Praça Central, Biblioteca Municipal ou ${localPref}.`),1400);
+  setTimeout(()=>addMessage(`Responsável (Marcos): Posso encontrar em: Praça Central ou ${localPref}.`),1400);
   setTimeout(()=>addMessage(`Responsável (Marcos): Proponho o dia ${data || 'em breve'} às ${horario || 'a combinar'}. Você confirma?`),2000);
-  // salva contexto responsável
-  localStorage.setItem('bibliotech_last_responsible', JSON.stringify({name:'Marcos', place:'Praça Central', proposed: {date: data, time: horario}}));
-  // salva histórico
-  pushChat({text:`Responsável (Marcos): Proponho ${data||'data'} às ${horario||'horário'}`, who:'other'});
+  // salvar contexto e histórico
+  localStorage.setItem('bibliotech_last_responsible', JSON.stringify({name:'Marcos', place:'Praça Central', proposed:{date:data,time:horario}}));
+  pushChat({text:`Responsável (Marcos): Proposta ${data||'data'} às ${horario||'horário'}`, who:'other'});
 }
 
-/* ===== CHAT: envio, respostas e persistência ===== */
-function addMessage(text, who='other'){ const box = document.getElementById('chat-box'); const el = document.createElement('div'); el.className='msg' + (who==='me' ? ' me' : ''); el.textContent = text; box.appendChild(el); box.scrollTop = box.scrollHeight; pushChat({text, who}); }
+/* Chat: add, send, simulate e persistência */
+function addMessage(text, who='other'){ const box=document.getElementById('chat-box'); const el=document.createElement('div'); el.className='msg' + (who==='me' ? ' me' : ''); el.textContent = text; box.appendChild(el); box.scrollTop = box.scrollHeight; pushChat({text,who}); }
 function handleChat(e){ if(e.key==='Enter') sendChat(); }
-function sendChat(){ const input=document.getElementById('chatInput'); const txt=input.value.trim(); if(!txt) return; addMessage('Você: '+txt,'me'); input.value=''; setTimeout(()=>simulateResponse(txt),700); }
-
-/* simular respostas mais naturais e permitir aceitar proposta clicando */
+function sendChat(){ const input = document.getElementById('chatInput'); const txt = input.value.trim(); if(!txt) return; addMessage('Você: '+txt,'me'); input.value=''; setTimeout(()=>simulateResponse(txt),700); }
 function simulateResponse(txt){
-  const low = txt.toLowerCase(); const resp = JSON.parse(localStorage.getItem('bibliotech_last_responsible')||'null'); const nome = document.getElementById('meuNome').value || 'Usuário';
-  if(low.includes('sim')||low.includes('confirmo')||low.includes('ok')){ addMessage(`Responsável (Marcos): Perfeito, ${nome}! Está combinado.`); return; }
-  if(low.includes('onde')||low.includes('local')){ addMessage(`Responsável (Marcos): Estou em ${resp?resp.place:'Praça Central'}. Quer que eu confirme outro local?`); return; }
-  if(low.includes('horário')||low.includes('quando')){ addMessage(`Responsável (Marcos): Eu posso no fim de semana ou após as 18:00. Prefere fim de semana?`); return; }
-  if(low.includes('telefone')||low.includes('contato')){ addMessage(`Responsável (Marcos): Prefiro combinar por aqui mesmo. Se quiser, trocamos número.`); return; }
-  addMessage(`Responsável (Marcos): Entendi, ${nome}. Pode enviar qual livro você oferece em troca e sugerir horário.`);
+  const low = (txt||'').toLowerCase(); const resp = JSON.parse(localStorage.getItem('bibliotech_last_responsible')||'null'); const nome = document.getElementById('meuNome').value || 'Usuário';
+  if(low.includes('sim')||low.includes('confirmo')||low.includes('ok')){ addMessage(`Responsável (Marcos): Perfeito, ${nome}! Combinado.`); return; }
+  if(low.includes('onde')||low.includes('local')){ addMessage(`Responsável (Marcos): Estou em ${resp?resp.place:'Praça Central'}.`); return; }
+  if(low.includes('quando')||low.includes('horário')||low.includes('dia')){ addMessage(`Responsável (Marcos): Posso no fim de semana ou após 18:00. Qual prefere?`); return; }
+  addMessage(`Responsável (Marcos): Entendi, ${nome}. Me diga qual livro você oferece em troca e qual horário prefere.`);
 }
 
-/* salvar e recuperar histórico de chat */
+/* Histórico de chat no localStorage */
 function pushChat(msg){ const arr = getChat(); arr.push(msg); saveChat(arr); }
-function loadChatState(){ const hist = getChat(); if(hist && hist.length) hist.forEach(m=> addMessage(m.text, m.who)); }
+function loadChatState(){ const hist = getChat(); if(hist && hist.length){ hist.forEach(m=>{ const who = m.who||'other'; addMessage(m.text, who); }); } }
+
+/* Disponibilidade / reserva (simulação) */
+function markAvailable(id){ alert('Marcado como disponível (simulação).'); }
+function reserve(id){ alert('Reservado (simulação).'); }
 
 /* util */
-function showPage(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function showPage(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); const el=document.getElementById(id); if(el) el.classList.add('active'); }
 
-/* disponibilidade simples / reserva (simulação) */
-function markAvailable(id){ alert('Marcado como disponível (simulação).'); }
-function reserve(id){ alert('Livro reservado (simulação).'); }
-
-/* inicializar displays */
-function renderFavorites(){ renderFavorites = renderFavorites; /* placeholder to ensure fn exists before use */ }
-renderFavorites = function(){ const favs = getFavs(); const box = document.getElementById('favoritosBox'); box.innerHTML=''; if(favs.length===0){ box.innerHTML='<p class="small">Nenhum favorito ainda.</p>'; return; } favs.forEach(fid=>{ const l = livros.find(x=>x.id===fid); const el = document.createElement('div'); el.className='card'; el.innerHTML = `<div class="book-img" style="background-image:url('${l.capa}')"></div><div style="flex:1"><strong>${l.titulo}</strong><div class="meta">${l.autor}</div><p class="small">${l.resumo}</p><div style="margin-top:8px;display:flex;gap:8px"><button class="btn" onclick="selectTroca(${l.id})">Solicitar Troca</button><button class="btn-ghost" onclick="removeFav(${l.id})">Remover</button></div></div>`; box.appendChild(el); }); }
-function removeFav(id){ let favs=getFavs(); favs=favs.filter(x=>x!==id); saveFavs(favs); renderFavorites(); }
-
-/* comandos finais de inicialização */
-function init(){
-  const snoop = document.getElementById('globalSearch'); if(snoop) snoop.value='';
-  renderShelf(); renderFavorites(); loadChatState();
-}
-init();
+/* Inicial */
+renderShelf(); renderFavorites();
 </script>
 </body>
 </html>
