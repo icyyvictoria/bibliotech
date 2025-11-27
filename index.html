@@ -1,157 +1,280 @@
 <!DOCTYPE html>
-<html lang='pt-BR'>
+<html lang="pt-BR">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>Bibliotech - Plataforma de Trocas</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bibliotech — Troca de Livros</title>
 <style>
-body{margin:0;font-family:Arial;background:#f7f0e6;color:#4a3426;}
-header{background:#d7b894;padding:20px;text-align:center;font-size:26px;font-weight:bold;}
-nav{display:flex;justify-content:center;gap:20px;background:#c7a47c;padding:12px;}
-nav a{color:#4a3426;text-decoration:none;font-weight:bold;cursor:pointer;}
-.container{padding:20px;max-width:900px;margin:0 auto;}
-.page{display:none;}
-.active{display:block;}
-.card{background:white;padding:15px;margin:10px 0;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.2);display:flex;gap:15px;align-items:flex-start;}
-.book-img{width:80px;height:110px;border-radius:5px;background-size:cover;background-position:center;flex-shrink:0;}
-.button{background:#8c6f54;color:white;padding:10px 20px;border:none;border-radius:6px;cursor:pointer;margin-top:10px;}
-#chat-box{background:white;height:250px;overflow-y:auto;padding:10px;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.2);margin-bottom:10px;}
-.message{margin-bottom:10px;padding:8px;background:#f0e0cb;border-radius:8px;}
-.book-list-item{cursor:pointer;}
+  :root{
+    --bg:#f7f0e6; --accent:#c7a47c; --accent-2:#d7b894;
+    --text:#4a3426; --card:#ffffff; --btn:#8c6f54;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+  header{background:var(--accent-2);padding:18px;text-align:center;font-size:22px;font-weight:700}
+  .wrap{max-width:900px;margin:0 auto;padding:16px}
+  nav{display:flex;gap:10px;justify-content:center;margin:12px 0;flex-wrap:wrap}
+  nav button{background:transparent;border:0;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer}
+  nav button.active{background:var(--accent)}
+  .page{display:none}
+  .page.active{display:block}
+  .card{background:white;padding:14px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin:10px 0;display:flex;gap:12px}
+  .book-img{width:90px;height:130px;border-radius:6px;background-size:cover;background-position:center}
+  h2{margin:0 0 10px 0}
+  .small{color:#6d5a45;font-size:14px}
+  .btn{background:var(--btn);color:white;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+  .search{width:100%;padding:10px;border-radius:8px;border:1px solid #bcae9f;margin-top:8px}
 </style>
 </head>
 <body>
-<header>📚 Bibliotech</header>
+<header>📚 Bibliotech — Trocas de Livros</header>
 
-<nav>
-<a onclick="showPage('home')">Início</a>
-<a onclick="showPage('estante')">Estante</a>
-<a onclick="showPage('buscar')">Buscar</a>
-<a onclick="showPage('troca')">Solicitar Troca</a>
-<a onclick="showPage('chat')">Chat</a>
+<div class="wrap">
+<nav id="menu">
+  <button class="active" data-page="home">Início</button>
+  <button data-page="estante">Estante</button>
+  <button data-page="buscar">Buscar</button>
+  <button data-page="troca">Solicitar Troca</button>
+  <button data-page="chat">Chat</button>
 </nav>
+<!-- PÁGINA INÍCIO -->
+<section id="home" class="page active">
+  <h2>Como funciona a Bibliotech?</h2>
+  <p class="small">
+    A Bibliotech permite ver livros disponíveis, favoritar, buscar títulos,
+    solicitar trocas e conversar com o responsável.
+  </p>
+  <div class="card">
+    <div style="flex:1">
+      <strong>Funcionalidades principais:</strong>
+      <ul style="margin:6px 0 0 18px">
+        <li>Estante virtual</li>
+        <li>Buscar livros</li>
+        <li>Adicionar aos favoritos</li>
+        <li>Solicitar troca</li>
+        <li>Chat interativo</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-<div class='container'>
-  <div id='home' class='page active'>
-<h2>Como o aplicativo funciona?</h2>
-<p>A Bibliotech permite cadastrar livros, buscar títulos, favoritar, solicitar trocas e conversar com o responsável.</p>
-<ul>
-<li>📚 Organize sua estante virtual</li>
-<li>🔍 Busque livros</li>
-<li>⭐ Favorite livros</li>
-<li>🔄 Solicite trocas</li>
-<li>💬 Converse com o dono do livro</li>
-</ul>
-</div>
+<!-- ESTANTE -->
+<section id="estante" class="page">
+  <h2>Estante — Livros disponíveis</h2>
 
-<div id='estante' class='page'>
-<h2>Minha Estante</h2>
+  <div id="shelf"></div>
+</section>
+<!-- BUSCAR -->
+<section id="buscar" class="page">
+  <h2>Buscar Livros</h2>
+  <input id="searchInput" class="search" placeholder="Digite o título..." oninput="searchBooks()">
+  <div id="searchResults"></div>
+</section>
 
-<div class='card'>
-<div class='book-img' style="background-image:url('https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg')"></div>
-<div><strong>Harry Potter e a Pedra Filosofal</strong><br><em>J.K. Rowling</em><p>O começo da saga.</p></div></div>
+<!-- SOLICITAR TROCA -->
+<section id="troca" class="page">
+  <h2>Solicitar Troca</h2>
+  <p class="small">Os livros que você favoritar aparecerão aqui.</p>
+  <div id="favoritosBox"></div>
+  <div id="trocaBox" style="margin-top:12px"></div>
+</section>
 
-<div class='card'>
-<div class='book-img' style="background-image:url('https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg')"></div>
-<div><strong>O Pequeno Príncipe</strong><br><em>Antoine de Saint-Exupéry</em><p>Uma história sobre amor e humanidade.</p></div></div>
+<!-- CHAT -->
+<section id="chat" class="page">
+  <h2>Chat com o responsável</h2>
+  <div id="chat-box"
+       style="background:white;border-radius:8px;padding:10px;height:260px;overflow:auto;box-shadow:0 2px 6px rgba(0,0,0,.1)">
+  </div>
 
-<div class='card'>
-<div class='book-img' style="background-image:url('https://m.media-amazon.com/images/I/81OthjkJBuL.jpg')"></div>
-<div><strong>Dom Casmurro</strong><br><em>Machado de Assis</em><p>Um clássico brasileiro.</p></div></div>
+  <input id="chatInput" class="search"
+         placeholder="Digite sua mensagem e pressione Enter"
+         onkeypress="handleChat(event)">
+</section>
 
-<div class='card'>
-<div class='book-img' style="background-image:url('https://m.media-amazon.com/images/I/71g2ednj0JL.jpg')"></div>
-<div><strong>A Culpa é das Estrelas</strong><br><em>John Green</em><p>Uma história emocionante.</p></div></div>
-
-</div>
-
-<div id='buscar' class='page'>
-<h2>Buscar Livros</h2>
-<input id='searchInput' type='text' placeholder='Digite o título...' style='padding:10px;width:100%;border-radius:5px;border:1px solid #b59b7b;' oninput='searchBooks()'>
-<div id='searchResults'></div>
-</div>
-
-<div id='troca' class='page'>
-<h2>Livros Favoritados</h2>
-<div id='favoritos'>
-<div class='card book-list-item' onclick="selectTroca('Harry Potter','J.K. Rowling')">⭐ Harry Potter e a Pedra Filosofal</div>
-<div class='card book-list-item' onclick="selectTroca('O Hobbit','J.R.R. Tolkien')">⭐ O Hobbit</div>
-<div class='card book-list-item' onclick="selectTroca('O Pequeno Príncipe','Antoine de Saint-Exupéry')">⭐ O Pequeno Príncipe</div>
-</div>
-<div id='trocaBox'></div>
-</div>
-
-<div id='chat' class='page'>
-<h2>Chat com o Responsável 📩</h2>
-<div id='chat-box'></div>
-<input id='chatInput' type='text' placeholder='Digite sua mensagem...' style='padding:10px;width:100%;border-radius:5px;border:1px solid #b59b7b;' onkeypress='handleChat(event)'>
+<!-- MODAL DE DETALHES -->
+<div id="modal"
+     style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);align-items:center;justify-content:center;">
+  <div style="background:white;padding:16px;border-radius:10px;max-width:90%;"
+       id="modalContent"></div>
 </div>
 <script>
-const livros=[
-{titulo:'Harry Potter e a Pedra Filosofal',autor:'J.K. Rowling',resumo:'Harry descobre que é um bruxo.'},
-{titulo:'O Pequeno Príncipe',autor:'Antoine de Saint-Exupéry',resumo:'Um príncipe que vive de planeta em planeta.'},
-{titulo:'Dom Casmurro',autor:'Machado de Assis',resumo:'Um romance marcado pela dúvida.'},
-{titulo:'A Culpa é das Estrelas',autor:'John Green',resumo:'Dois jovens enfrentando o câncer.'},
-{titulo:'O Hobbit',autor:'J.R.R. Tolkien',resumo:'Bilbo em uma aventura inesperada.'}
+// Lista de livros
+const livros = [
+  {id:1,titulo:"Harry Potter e a Pedra Filosofal",autor:"J.K. Rowling",capa:"https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg",resumo:"O começo da jornada do jovem bruxo."},
+  {id:2,titulo:"O Pequeno Príncipe",autor:"Antoine de Saint-Exupéry",capa:"https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg",resumo:"Um clássico sobre amizade e inocência."},
+  {id:3,titulo:"Dom Casmurro",autor:"Machado de Assis",capa:"https://m.media-amazon.com/images/I/81OthjkJBuL.jpg",resumo:"Uma história marcada pela dúvida e ciúme."},
+  {id:4,titulo:"O Hobbit",autor:"J.R.R. Tolkien",capa:"https://m.media-amazon.com/images/I/81WcnNQ-TBL.jpg",resumo:"A aventura inesperada de Bilbo Bolseiro."},
+  {id:5,titulo:"A Culpa é das Estrelas",autor:"John Green",capa:"https://m.media-amazon.com/images/I/71g2ednj0JL.jpg",resumo:"Um romance emocionante sobre amor e perda."}
 ];
 
-let livroSelecionado=null;
-
-function showPage(id){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-}
-
-function searchBooks(){
-const input=document.getElementById('searchInput').value.toLowerCase();
-const results=livros.filter(l=>l.titulo.toLowerCase().includes(input));
-let html='';
-results.forEach(l=>{
-html+=`<div class='card book-list-item' onclick="selectTroca('${l.titulo}','${l.autor}')">
-<strong>${l.titulo}</strong><br><em>${l.autor}</em></div>`;
+// Mudar páginas
+document.querySelectorAll("#menu button").forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll("#menu button").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(btn.dataset.page).classList.add("active");
+  };
 });
-document.getElementById('searchResults').innerHTML=html;
+
+// Criar estante de livros
+function renderShelf(){
+  const shelf = document.getElementById("shelf");
+  shelf.innerHTML = "";
+  livros.forEach(livro=>{
+    shelf.innerHTML += `
+      <div class="card">
+        <div class="book-img" style="background-image:url('${livro.capa}')"></div>
+        <div style="flex:1">
+          <strong>${livro.titulo}</strong>
+          <p class="small">${livro.autor}</p>
+          <p class="small">${livro.resumo}</p>
+          <button class="btn" onclick="openDetails(${livro.id})">Detalhes</button>
+          <button class="btn" style="background:#c7a47c" onclick="addFavorite(${livro.id})">Favoritar ⭐</button>
+        </div>
+      </div>
+    `;
+  });
 }
 
-function selectTroca(titulo,autor){
-livroSelecionado={titulo,autor};
-document.getElementById('trocaBox').innerHTML=
-`<p>Você solicitou troca por <b>${titulo}</b>.<br><br>
-<button class='button' onclick='confirmTroca()'>Confirmar</button></p>`;
-showPage('troca');
+// Abrir detalhes em modal
+function openDetails(id){
+  const livro = livros.find(l=>l.id===id);
+  document.getElementById("modalContent").innerHTML = `
+    <h3>${livro.titulo}</h3>
+    <p><em>${livro.autor}</em></p>
+    <div class="book-img" style="width:120px;height:165px;background-image:url('${livro.capa}')"></div>
+    <p class="small">${livro.resumo}</p>
+    <button class="btn" onclick="addFavorite(${livro.id})">Favoritar ⭐</button>
+  `;
+  document.getElementById("modal").style.display="flex";
 }
 
+// Fechar modal ao clicar fora
+document.getElementById("modal").onclick = (e)=>{
+  if(e.target.id==="modal") e.target.style.display="none";
+};
+
+// Favoritos
+function getFavs(){ return JSON.parse(localStorage.getItem("favs")||"[]"); }
+function saveFavs(arr){ localStorage.setItem("favs",JSON.stringify(arr)); }
+
+function addFavorite(id){
+  let favs = getFavs();
+  if(!favs.includes(id)){
+    favs.push(id);
+    saveFavs(favs);
+    alert("Livro adicionado aos favoritos!");
+    renderFavorites();
+  } else {
+    alert("Esse livro já está nos favoritos.");
+  }
+}
+
+// Renderizar favoritos
+function renderFavorites(){
+  const favs = getFavs();
+  const box = document.getElementById("favoritosBox");
+  box.innerHTML = "";
+  if(favs.length===0){
+    box.innerHTML = "<p class='small'>Nenhum favorito ainda.</p>";
+    return;
+  }
+  favs.forEach(fid=>{
+    const l = livros.find(x=>x.id===fid);
+    box.innerHTML += `
+      <div class="card">
+        <div class="book-img" style="background-image:url('${l.capa}')"></div>
+        <div>
+          <strong>${l.titulo}</strong>
+          <p class="small">${l.autor}</p>
+          <button class="btn" onclick="selectTroca(${l.id})">Solicitar troca</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// Solicitar troca
+let livroSelecionado = null;
+
+function selectTroca(id){
+  livroSelecionado = livros.find(l=>l.id===id);
+  document.getElementById("trocaBox").innerHTML = `
+    <div class="card">
+      <div style="flex:1">
+        <strong>Você quer trocar por:</strong>
+        <p>${livroSelecionado.titulo}</p>
+        <button class="btn" onclick="confirmTroca()">Confirmar Solicitação</button>
+      </div>
+    </div>
+  `;
+}
+
+// Confirmar solicitação e abrir chat
 function confirmTroca(){
-document.getElementById('trocaBox').innerHTML=
-`✔ Solicitação enviada! O responsável entrará em contato.`;
-showPage('chat');
+  document.getElementById("trocaBox").innerHTML =
+    "<p>✔ Solicitação enviada! O responsável vai falar com você no chat.</p>";
+  document.getElementById("menu").querySelector("[data-page='chat']").click();
 
-setTimeout(()=>addMessage("Responsável: Oi! Recebi sua solicitação 😊"),1000);
-setTimeout(()=>addMessage(`Responsável: Meu livro é '${livroSelecionado.titulo}'.`),1800);
-setTimeout(()=>addMessage("Responsável: Qual livro você tem para trocar?"),2500);
+  setTimeout(()=>addMessage("Responsável: Oi! Recebi sua solicitação 😊"),800);
+  setTimeout(()=>addMessage(`Responsável: Meu livro é '${livroSelecionado.titulo}'.`),1500);
+  setTimeout(()=>addMessage("Responsável: Qual livro você tem para trocar?"),2200);
 }
 
+// CHAT
 function addMessage(text){
-const box=document.getElementById('chat-box');
-box.innerHTML+=`<div class='message'>${text}</div>`;
-box.scrollTop=box.scrollHeight;
+  const box = document.getElementById("chat-box");
+  box.innerHTML += `<div class="msg">${text}</div>`;
+  box.scrollTop = box.scrollHeight;
 }
 
-function handleChat(event){
-if(event.key==='Enter'){
-const msg=document.getElementById('chatInput').value;
-document.getElementById('chatInput').value='';
-addMessage('Você: '+msg);
+function handleChat(e){ if(e.key==="Enter") sendMessage(); }
 
-setTimeout(()=>{
-const m=msg.toLowerCase();
-if(m.includes('resumo')) addMessage('Responsável: Posso te enviar o resumo!');
-else if(m.includes('trocar')) addMessage('Responsável: Vamos marcar a troca?');
-else addMessage('Responsável: Entendi! 😊');
-},800);
+function sendMessage(){
+  const input = document.getElementById("chatInput");
+  const msg = input.value.trim();
+  if(!msg) return;
+  addMessage("Você: " + msg);
+  input.value = "";
+
+  setTimeout(()=>{
+    addMessage("Responsável: Entendi! Vamos combinar a troca?");
+  },800);
 }
+
+// Buscar
+function searchBooks(){
+  const txt = document.getElementById("searchInput").value.toLowerCase();
+  const box = document.getElementById("searchResults");
+  box.innerHTML = "";
+
+  const resultado = livros.filter(l=>
+    l.titulo.toLowerCase().includes(txt) ||
+    l.autor.toLowerCase().includes(txt)
+  );
+
+  resultado.forEach(l=>{
+    box.innerHTML += `
+      <div class="card">
+        <div class="book-img" style="background-image:url('${l.capa}')"></div>
+        <div>
+          <strong>${l.titulo}</strong>
+          <p class="small">${l.autor}</p>
+          <button class="btn" onclick="openDetails(${l.id})">Ver detalhes</button>
+        </div>
+      </div>
+    `;
+  });
+
+  if(resultado.length===0){
+    box.innerHTML = "<p class='small'>Nenhum livro encontrado.</p>";
+  }
 }
-  </script>
-  </div>
+
+// Inicializar páginas
+renderShelf();
+renderFavorites();
+</script>
 </body>
 </html>
